@@ -60,9 +60,10 @@ module Agents
         payload = {meta: {}}
 
         payload[:schemaorg] = doc.items.map do |item|
+          next if item.type.nil?
           (context, sep, type) = item.type.rpartition('/')
           handle_item(item, {"@context" => "#{rewrite_context(context)}#{sep}", '@type' => type})
-        end
+        end.compact
 
         doc = Nokogiri::HTML(mo['data'])
         doc.css('script[type="application/ld+json"]').each do |el|

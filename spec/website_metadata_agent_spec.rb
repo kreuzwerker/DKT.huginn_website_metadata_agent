@@ -53,6 +53,11 @@ describe Agents::WebsiteMetadataAgent do
       expect { @checker.receive([event]) }.to change(AgentLog, :count).by(0)
     end
 
+    it 'works with incomplete schema org tags' do
+      event = Event.new(payload: {"url" => "http://test.org", "body" => read_file('blog.html')})
+      expect { @checker.receive([event]) }.to change(AgentLog, :count).by(0)
+    end
+
     it "creates an agent log entry when embedded JSON-LD is not parseable" do
       event = Event.new(payload: {"url" => "http://test.org", "body" => '<script type="application/ld+json">invalid JSON</script>'})
       expect { @checker.receive([event]) }.to change(AgentLog, :count).by(1)
