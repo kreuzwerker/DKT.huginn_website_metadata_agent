@@ -79,7 +79,7 @@ module Agents
 
         original_payload = boolify(mo['merge']) ? event.payload : {}
 
-        create_event payload: { mo['result_key'] => original_payload.merge(payload) }
+        create_event payload: original_payload.merge(mo['result_key'] => payload)
       end
     end
 

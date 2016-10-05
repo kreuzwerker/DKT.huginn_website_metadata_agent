@@ -62,7 +62,7 @@ describe Agents::WebsiteMetadataAgent do
       @checker.options['merge'] = "true"
       event = Event.new(payload: {"url" => "http://test.org", "body" => '<html></html>'})
       expect { @checker.receive([event]) }.to change(Event, :count).by(1)
-      expect(Event.last.payload[:data][:url]).to be_present
+      expect(Event.last.payload[:url]).to be_present
     end
   end
 end
